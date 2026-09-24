@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário do Ensaio — MPS Photography</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f1e7;
+    --bg-elev: #ffffff;
+    --text: #211d15;
+    --muted: #6f6656;
+    --gold: #8a6d3b;
+    --gold-dark: #6e5730;
+    --border: #e3dac4;
+    --accent-bg: #fbf7ee;
+    --danger: #b3261e;
+    --success: #1e6b3a;
+    --shadow: 0 10px 30px rgba(30, 24, 10, 0.08);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1b1811; --bg-elev: #24201a; --text: #f2ecdd; --muted: #b7ac93;
+      --gold: #dcbb77; --gold-dark: #caa561; --border: #3c3527; --accent-bg: #29241a;
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1b1811; --bg-elev: #24201a; --text: #f2ecdd; --muted: #b7ac93;
+    --gold: #dcbb77; --gold-dark: #caa561; --border: #3c3527; --accent-bg: #29241a;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin:0; padding:0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 28px 14px 60px;
+  }
+  .wrap { max-width: 640px; margin: 0 auto; }
+  .brand { text-align:center; margin-bottom: 18px; }
+  .brand h1 {
+    font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+    color: var(--gold);
+    font-size: 2rem;
+    letter-spacing: 0.04em;
+    margin: 0 0 2px;
+  }
+  .brand p { margin:0; color: var(--muted); font-size:.85rem; letter-spacing:.05em; }
+  .brand .insta { font-size:.78rem; color: var(--muted); margin-top:4px; }
+  .hr {
+    height:1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 18px 0 22px; opacity:.6;
+  }
+  .card {
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px 20px;
+    box-shadow: var(--shadow);
+    margin-bottom: 18px;
+  }
+  .intro { text-align:center; padding: 6px 4px 4px; }
+  .intro p { color: var(--muted); font-size:.92rem; margin: 6px 0 0; }
+  h2.section {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--gold);
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    letter-spacing: .06em;
+    margin: 0 0 12px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+  }
+  label { display:block; font-size:.85rem; font-weight:600; margin: 14px 0 5px; color: var(--text); }
+  label.first { margin-top:0; }
+  input[type=text], input[type=email], input[type=tel], input[type=date], textarea {
+    width:100%; padding:11px 12px; border-radius:9px; border:1px solid var(--border);
+    background: var(--accent-bg); color: var(--text); font-size:.95rem; font-family:inherit;
+  }
+  textarea { resize: vertical; min-height:60px; }
+  .row2 { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
+  @media (max-width:520px){ .row2 { grid-template-columns: 1fr; } }
+
+  .choice-grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px 14px; margin-top:6px; }
+  @media (max-width:480px){ .choice-grid { grid-template-columns: 1fr; } }
+  .choice {
+    display:flex; align-items:center; gap:9px; padding:9px 10px; border:1px solid var(--border);
+    border-radius:9px; cursor:pointer; background: var(--accent-bg); font-size:.92rem;
+    transition: border-color .15s, background .15s;
+  }
+  .choice input { accent-color: var(--gold); width:16px; height:16px; flex-shrink:0; }
+  .choice.checked { border-color: var(--gold); background: color-mix(in srgb, var(--gold) 12%, var(--accent-bg)); }
+
+  button, .btn {
+    font-family:'Inter',sans-serif; font-weight:700; font-size:.95rem; letter-spacing:.02em;
+    border:none; border-radius:10px; padding:13px 22px; cursor:pointer;
+    background: var(--gold); color:#fff; width:100%;
+    transition: background .15s, transform .05s; text-decoration:none; text-align:center; display:block;
+  }
+  button:hover, .btn:hover { background: var(--gold-dark); }
+  button:active, .btn:active { transform: scale(0.98); }
+  button.secondary { background: transparent; color: var(--gold); border:1.5px solid var(--gold); }
+
+  .muted { color: var(--muted); }
+  .center { text-align:center; }
+  .small { font-size:.8rem; }
+  .error-msg { color: var(--danger); font-size:.85rem; margin-top:8px; display:none; }
+
+  .preview-box {
+    background: var(--accent-bg); border:1px solid var(--border); border-radius:10px;
+    padding:14px 16px; font-size:.85rem; white-space:pre-wrap; line-height:1.7; margin-top:10px;
+  }
+  .success-icon { font-size:2.4rem; margin:0 0 6px; }
+  .footer-note { text-align:center; color:var(--muted); font-size:.72rem; margin-top:26px; line-height:1.6; }
+  .hidden { display:none !important; }
+  #fatalErrorBox { position:sticky; top:0; z-index:999; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <h1>MPS PHOTOGRAPHY</h1>
+    <p>ensaios &amp; retratos</p>
+    <p class="insta">@_mpsphotography_</p>
+  </div>
+  <div class="hr"></div>
+
+  <div id="app"></div>
+
+  <div class="footer-note">
+    Formulário digital MPS Photography — suas respostas são enviadas por WhatsApp para a fotógrafa, que usa essas informações para montar seu contrato.
+  </div>
+</div>
+
+<script>
+function esc(s){ return (s||'').toString().replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+function showFatalError(msg) {
+  let box = document.getElementById('fatalErrorBox');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'fatalErrorBox';
+    box.style.cssText = 'background:#b3261e;color:#fff;padding:10px 14px;font-size:.8rem;border-radius:8px;margin-bottom:14px;white-space:pre-wrap;';
+    document.body.insertBefore(box, document.body.firstChild);
+  }
+  box.textContent = '⚠️ Erro: ' + msg;
+}
+window.addEventListener('error', (e) => showFatalError(e.message || String(e.error)));
+window.addEventListener('unhandledrejection', (e) => showFatalError((e.reason && e.reason.message) || String(e.reason)));
+
+// Número de WhatsApp da fotógrafa (Priscila) — formato internacional sem espaços/símbolos
+const WHATSAPP_FOTOGRAFA = '5511914746140';
+
+const app = document.getElementById('app');
+
+try { renderForm(); } catch (e) { showFatalError('ao montar o formulário: ' + e.message); }
+
+function renderForm() {
+  app.innerHTML = `
+    <div class="card intro">
+      <h2 class="section" style="border:none;">Formulário do seu ensaio</h2>
+      <p>Preencha seus dados e as opções do seu pacote. No final, é só enviar pelo WhatsApp — usamos essas informações para preparar seu contrato.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="section">Seus dados</h2>
+      <label class="first">Nome completo</label>
+      <input type="text" id="f_nome" placeholder="Seu nome completo">
+
+      <div class="row2">
+        <div><label>CPF</label><input type="text" id="f_cpf" placeholder="000.000.000-00"></div>
+        <div><label>Telefone / WhatsApp</label><input type="tel" id="f_tel" placeholder="(11) 90000-0000"></div>
+      </div>
+
+      <label>E-mail</label>
+      <input type="email" id="f_email" placeholder="seuemail@email.com">
+
+      <label>Endereço</label>
+      <input type="text" id="f_endereco" placeholder="Rua, número, bairro, cidade/UF">
+    </div>
+
+    <div class="card">
+      <h2 class="section">Tipo de serviço</h2>
+      <div class="choice-grid" id="grid_tipo">
+        ${['Ensaio Gestante','Ensaio Newborn','Ensaio de Casal','Ensaio Individual/Book','Ensaio Infantil','Aniversário/Festa','Casamento','Outro'].map((t,i)=>`
+          <label class="choice"><input type="radio" name="tipoServico" value="${t}" ${i===0?'checked':''}> ${t}</label>
+        `).join('')}
+      </div>
+      <input type="text" id="f_tipoOutro" placeholder="Se 'Outro', descreva" style="margin-top:8px;">
+
+      <div class="row2" style="margin-top:14px;">
+        <div><label>Data desejada</label><input type="date" id="f_data"></div>
+        <div><label>Horário preferido</label><input type="text" id="f_horario" placeholder="Ex: manhã, 14h..."></div>
+      </div>
+      <label>Local (se já souber)</label>
+      <input type="text" id="f_local" placeholder="Endereço do ensaio ou evento">
+    </div>
+
+    <div class="card">
+      <h2 class="section">Pacote desejado</h2>
+      <p class="muted small" style="margin-top:-6px;">O valor final é confirmado pela fotógrafa conforme o pacote e os extras escolhidos.</p>
+      <div class="choice-grid" id="grid_pacote" style="grid-template-columns:1fr;">
+        ${['🌙 Essencial (quantidade básica de fotos)','⭐ Especial (mais fotos + trocas de look)','👑 Completo (pacote maior + itens extras)'].map((t,i)=>`
+          <label class="choice"><input type="radio" name="pacote" value="${t}" ${i===1?'checked':''}> ${t}</label>
+        `).join('')}
+      </div>
+
+      <label style="margin-top:14px;">Quer pedir fotos extras, além do pacote?</label>
+      <div class="row2">
+        <div>
+          <input type="text" id="f_fotosExtras" placeholder="Ex: 5 fotos extras (opcional)">
+        </div>
+      </div>
+      <p class="muted small" style="margin-top:6px;">Cada foto extra tem valor à parte — a fotógrafa informa o total quando enviar o contrato.</p>
+    </div>
+
+    <div class="card">
+      <h2 class="section">Itens adicionais desejados</h2>
+      <div class="choice-grid" id="grid_extras">
+        ${['Álbum impresso','Quadro decorativo','Pen drive personalizado','Sessão extra','Vídeo highlights','Making of'].map(t=>`
+          <label class="choice"><input type="checkbox" name="extras" value="${t}"> ${t}</label>
+        `).join('')}
+      </div>
+      <label style="margin-top:12px;">Forma de pagamento preferida</label>
+      <div class="choice-grid">
+        ${['PIX','Cartão de crédito','Cartão de débito','Dinheiro'].map((t,i)=>`
+          <label class="choice"><input type="radio" name="pagamento" value="${t}" ${i===0?'checked':''}> ${t}</label>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="section">Direitos de imagem</h2>
+      <p class="muted small" style="margin-top:-6px;">Como você autoriza o uso das suas fotos na divulgação do trabalho da fotógrafa (portfólio, redes sociais)?</p>
+      <div class="choice-grid" id="grid_direitos" style="grid-template-columns:1fr;">
+        ${['Autorizo uso total (portfólio e redes sociais)','Autorizo, sem uso comercial pago (anúncios)','Autorizo mediante aprovação prévia de cada imagem','NÃO autorizo divulgação pública'].map((t,i)=>`
+          <label class="choice"><input type="radio" name="direitosImagem" value="${t}" ${i===0?'checked':''}> ${t}</label>
+        `).join('')}
+      </div>
+    </div>
+
+    <div class="card">
+      <label class="first">Alguma observação extra? (opcional)</label>
+      <textarea id="f_obs" placeholder="Alguma preferência, dúvida ou pedido especial..."></textarea>
+
+      <button type="button" style="margin-top:18px;" onclick="montarResumo()">Enviar respostas</button>
+      <p class="error-msg" id="formError">Preencha ao menos seu nome completo antes de enviar.</p>
+    </div>
+  `;
+
+  document.querySelectorAll('.choice').forEach(c => {
+    const input = c.querySelector('input');
+    const sync = () => c.classList.toggle('checked', input.checked);
+    input.addEventListener('change', () => {
+      if (input.type === 'radio') {
+        document.querySelectorAll(`input[name="${input.name}"]`).forEach(r => r.closest('.choice').classList.remove('checked'));
+      }
+      sync();
+    });
+    sync();
+  });
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  return day && m && y ? `${day}/${m}/${y}` : d;
+}
+
+function montarResumo() {
+  const nome = document.getElementById('f_nome').value.trim();
+  const errEl = document.getElementById('formError');
+  if (!nome) {
+    errEl.style.display = 'block';
+    document.getElementById('f_nome').focus();
+    return;
+  }
+  errEl.style.display = 'none';
+
+  const cpf = document.getElementById('f_cpf').value.trim();
+  const tel = document.getElementById('f_tel').value.trim();
+  const email = document.getElementById('f_email').value.trim();
+  const endereco = document.getElementById('f_endereco').value.trim();
+
+  const tipoEl = document.querySelector('input[name="tipoServico"]:checked');
+  const tipo = tipoEl ? tipoEl.value : '';
+  const tipoOutro = document.getElementById('f_tipoOutro').value.trim();
+  const tipoFinal = (tipo === 'Outro' && tipoOutro) ? tipoOutro : tipo;
+
+  const data = fmtDate(document.getElementById('f_data').value);
+  const horario = document.getElementById('f_horario').value.trim();
+  const local = document.getElementById('f_local').value.trim();
+
+  const pacoteEl = document.querySelector('input[name="pacote"]:checked');
+  const pacote = pacoteEl ? pacoteEl.value : '';
+  const fotosExtras = document.getElementById('f_fotosExtras').value.trim();
+
+  const extras = Array.from(document.querySelectorAll('input[name="extras"]:checked')).map(e=>e.value);
+  const pagamentoEl = document.querySelector('input[name="pagamento"]:checked');
+  const pagamento = pagamentoEl ? pagamentoEl.value : '';
+  const direitosEl = document.querySelector('input[name="direitosImagem"]:checked');
+  const direitos = direitosEl ? direitosEl.value : '';
+  const obs = document.getElementById('f_obs').value.trim();
+
+  let msg = `*Formulário de Ensaio — MPS Photography*\n\n`;
+  msg += `*Nome:* ${nome}\n`;
+  if (cpf) msg += `*CPF:* ${cpf}\n`;
+  if (tel) msg += `*Telefone:* ${tel}\n`;
+  if (email) msg += `*E-mail:* ${email}\n`;
+  if (endereco) msg += `*Endereço:* ${endereco}\n`;
+  msg += `\n*Tipo de serviço:* ${tipoFinal}\n`;
+  if (data) msg += `*Data desejada:* ${data}\n`;
+  if (horario) msg += `*Horário:* ${horario}\n`;
+  if (local) msg += `*Local:* ${local}\n`;
+  msg += `\n*Pacote desejado:* ${pacote}\n`;
+  if (fotosExtras) msg += `*Fotos extras solicitadas:* ${fotosExtras}\n`;
+  msg += `\n*Itens adicionais:* ${extras.length ? extras.join(', ') : 'nenhum'}\n`;
+  msg += `*Forma de pagamento:* ${pagamento}\n`;
+  msg += `\n*Direitos de imagem:* ${direitos}\n`;
+  if (obs) msg += `\n*Observações:* ${obs}\n`;
+  msg += `\n_Valor final a confirmar com a fotógrafa, conforme pacote e extras._`;
+
+  renderResumo(msg, nome);
+}
+
+function renderResumo(msg, nome) {
+  const waUrl = `https://wa.me/${WHATSAPP_FOTOGRAFA}?text=${encodeURIComponent(msg)}`;
+  app.innerHTML = `
+    <div class="card center">
+      <p class="success-icon">✅</p>
+      <h2 class="section" style="border:none;">Respostas prontas, ${esc(nome.split(' ')[0])}!</h2>
+      <p class="muted small">Confira o resumo abaixo e toque no botão para enviar pelo WhatsApp.</p>
+      <div class="preview-box">${esc(msg)}</div>
+      <a class="btn" style="margin-top:16px;" href="${waUrl}" target="_blank" rel="noopener">📲 Enviar pelo WhatsApp</a>
+      <button type="button" class="secondary" style="margin-top:10px;" onclick="try { renderForm(); } catch(e) { showFatalError(e.message); }">Editar respostas</button>
+    </div>
+  `;
+}
+</script>
+</body>
+</html>
