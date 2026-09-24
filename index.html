@@ -191,7 +191,7 @@ function renderForm() {
     <div class="card">
       <h2 class="section">Tipo de serviço</h2>
       <div class="choice-grid" id="grid_tipo">
-        ${['Ensaio Gestante','Ensaio Newborn','Ensaio de Casal','Ensaio Individual/Book','Ensaio Infantil','Aniversário/Festa','Casamento','Outro'].map((t,i)=>`
+        ${['Ensaio Gestante','Ensaio de Casal','Ensaio Individual/Book','Ensaio Infantil','Aniversário/Festa','Casamento','Outro'].map((t,i)=>`
           <label class="choice"><input type="radio" name="tipoServico" value="${t}" ${i===0?'checked':''}> ${t}</label>
         `).join('')}
       </div>
@@ -225,7 +225,7 @@ function renderForm() {
     <div class="card">
       <h2 class="section">Itens adicionais desejados</h2>
       <div class="choice-grid" id="grid_extras">
-        ${['Álbum impresso','Fotos impressas','Pen drive personalizado','Sessão extra','Vídeo highlights','Making of'].map(t=>`
+        ${['Álbum impresso','Fotos impressas','Quadro de fotos 20x30','Sessão extra','Vídeo highlights','Making of'].map(t=>`
           <label class="choice"><input type="checkbox" name="extras" value="${t}"> ${t}</label>
         `).join('')}
       </div>
