@@ -215,21 +215,21 @@ function renderForm() {
       </div>
 
       <label style="margin-top:14px;">Quer pedir fotos extras, além do pacote?</label>
-      <div class="row2">
-        <div>
-          <input type="text" id="f_fotosExtras" placeholder="Ex: 5 fotos extras (opcional)">
-        </div>
+      <div class="choice-grid" id="grid_fotosExtras" style="grid-template-columns:1fr 1fr;">
+        <label class="choice"><input type="radio" name="fotosExtras" value="Sim"> Sim</label>
+        <label class="choice"><input type="radio" name="fotosExtras" value="Não" checked> Não</label>
       </div>
-      <p class="muted small" style="margin-top:6px;">Cada foto extra tem valor à parte — a fotógrafa informa o total quando enviar o contrato.</p>
+      <p class="muted small" style="margin-top:6px;">O valor das fotos extras é combinado no fechamento da venda das fotos, não faz parte do contrato.</p>
     </div>
 
     <div class="card">
       <h2 class="section">Itens adicionais desejados</h2>
       <div class="choice-grid" id="grid_extras">
-        ${['Álbum impresso','Quadro decorativo','Pen drive personalizado','Sessão extra','Vídeo highlights','Making of'].map(t=>`
+        ${['Álbum impresso','Fotos impressas','Pen drive personalizado','Sessão extra','Vídeo highlights','Making of'].map(t=>`
           <label class="choice"><input type="checkbox" name="extras" value="${t}"> ${t}</label>
         `).join('')}
       </div>
+      <p class="muted small" style="margin-top:6px;">Os valores dos itens adicionais deverão ser combinados diretamente com a fotógrafa.</p>
       <label style="margin-top:12px;">Forma de pagamento preferida</label>
       <div class="choice-grid">
         ${['PIX','Cartão de crédito','Cartão de débito','Dinheiro'].map((t,i)=>`
@@ -302,7 +302,8 @@ function montarResumo() {
 
   const pacoteEl = document.querySelector('input[name="pacote"]:checked');
   const pacote = pacoteEl ? pacoteEl.value : '';
-  const fotosExtras = document.getElementById('f_fotosExtras').value.trim();
+  const fotosExtrasEl = document.querySelector('input[name="fotosExtras"]:checked');
+  const fotosExtras = fotosExtrasEl ? fotosExtrasEl.value : '';
 
   const extras = Array.from(document.querySelectorAll('input[name="extras"]:checked')).map(e=>e.value);
   const pagamentoEl = document.querySelector('input[name="pagamento"]:checked');
@@ -322,7 +323,7 @@ function montarResumo() {
   if (horario) msg += `*Horário:* ${horario}\n`;
   if (local) msg += `*Local:* ${local}\n`;
   msg += `\n*Pacote desejado:* ${pacote}\n`;
-  if (fotosExtras) msg += `*Fotos extras solicitadas:* ${fotosExtras}\n`;
+  msg += `*Quer fotos extras?:* ${fotosExtras}\n`;
   msg += `\n*Itens adicionais:* ${extras.length ? extras.join(', ') : 'nenhum'}\n`;
   msg += `*Forma de pagamento:* ${pagamento}\n`;
   msg += `\n*Direitos de imagem:* ${direitos}\n`;
